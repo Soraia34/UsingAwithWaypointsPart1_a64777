@@ -23,7 +23,7 @@ public class Node
         path = null;
     }
 
-    public GameObject getID()
+    public GameObject getId()
     {
         return id;
     }
