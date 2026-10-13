@@ -6,20 +6,20 @@ public class Graph
 {
     List<Edge> edges = new List<Edge>();
     List<Node> nodes = new List<Node>();
-    List<Node> pathList = new List<Node>();
+    public List<Node> pathList = new List<Node>();
 
     public Graph()
     {
         
     }
 
-    public void addNode(GameObject id)
+    public void AddNode(GameObject id)
     {
         Node node = new Node(id);
         nodes.Add(node);
     }
 
-    public void addEdge(GameObject fromNode, GameObject toNode)
+    public void AddEdge(GameObject fromNode, GameObject toNode)
     {
         Node from = findNode(fromNode);
         Node to = findNode(toNode);
@@ -47,8 +47,16 @@ public class Graph
 
     public bool AStar(GameObject startId, GameObject endId)
     {
+        if(startId == endId)
+        {
+            pathList.Clear();
+            return false;
+        }
+
         Node start = findNode(startId);
         Node end = findNode(endId);
+        Debug.Log("Start: " + start.getId().name);
+        Debug.Log("End: " + end.getId().name);
 
         if(start == null || end == null)
         {
@@ -79,25 +87,25 @@ public class Graph
 
             open.RemoveAt(i);
             closed.Add(thisNode);
-            Node neighbor;
+            Node neighbour;
 
             foreach (Edge e in thisNode.edgeList)
             {
-                neighbor = e.endNode;
+                neighbour = e.endNode;
 
-                if ( closed.IndexOf(neighbor) > -1 )
+                if ( closed.IndexOf(neighbour) > -1 )
                 {
                     continue;
                 }
 
-                tentative_g_score = thisNode.g + distance(thisNode, neighbor);
+                tentative_g_score = thisNode.g + distance(thisNode, neighbour);
 
-                if (open.IndexOf(neighbor) == -1)
+                if (open.IndexOf(neighbour) == -1)
                 {
-                    open.Add(neighbor);
+                    open.Add(neighbour);
                     tentative_is_better = true;
                 }
-                else if (tentative_g_score < neighbor.g)
+                else if (tentative_g_score < neighbour.g)
                 {
                     tentative_is_better = true;
                 }
@@ -108,10 +116,10 @@ public class Graph
 
                 if (tentative_is_better)
                 {
-                    neighbor.cameFrom = thisNode;
-                    neighbor.g = tentative_g_score;
-                    neighbor.h = distance(thisNode, end);
-                    neighbor.f = neighbor.g + neighbor.h;
+                    neighbour.cameFrom = thisNode;
+                    neighbour.g = tentative_g_score;
+                    neighbour.h = distance(thisNode, end);
+                    neighbour.f = neighbour.g + neighbour.h;
                 }
             }
         }
@@ -148,7 +156,7 @@ public class Graph
 
         for(int i = 1; i < l.Count; i++)
         {
-            if(l[i].f <= lowestf)
+            if(l[i].f < lowestf)
             {
                 lowestf = l[i].f;
                 iteratorCount = count;

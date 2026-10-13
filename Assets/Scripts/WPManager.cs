@@ -23,14 +23,14 @@ public class WPManager : MonoBehaviour
         {
             foreach (GameObject wp in waypoints)
             {
-                graph.addNode(wp);
+                graph.AddNode(wp);
             }
             foreach (Link l in links)
             {
-                graph.addEdge(l.node1, l.node2);
+                graph.AddEdge(l.node1, l.node2);
                 if (l.dir == Link.direction.BI)
                 {
-                    graph.addEdge(l.node2, l.node1);
+                    graph.AddEdge(l.node2, l.node1);
                 }
             }
         }

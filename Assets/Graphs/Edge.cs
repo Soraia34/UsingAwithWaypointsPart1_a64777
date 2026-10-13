@@ -1,13 +1,15 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Edge
 {
    public Node startNode;
     public Node endNode;
     
-     public Edge(Node form, Node to)
+     public Edge(Node from, Node to)
      {
-          startNode = form;
+          startNode = from;
           endNode = to;
      }
 }
